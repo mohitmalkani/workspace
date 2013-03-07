@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mohit Malkani</string>
+    <string name="edit_message">Please enter a message</string>
+    <string name="button_send">Click Me!</string>
+    <string name="edit_message2">Just for fun</string>
+    <string name="button_send2">Click Me!</string>
+    <string name="button_yellow">Yellow</string>
+    <string name="button_blue">Blue</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_display_message">My Message</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_change_color">ChangeColorActivity</string>
+
+</resources>

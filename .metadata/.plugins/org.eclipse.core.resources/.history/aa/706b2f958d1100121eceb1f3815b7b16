@@ -1,0 +1,50 @@
+package getjar.qa.developer_zone;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+//import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+//import org.openqa.selenium.ie.InternetExplorerDriver;
+
+public class HomePageTest {
+	private FirefoxDriver driver;
+    //private InternetExplorerDriver driver;
+    private static String host = "";
+
+    public static void main(String args[]) throws InterruptedException{
+    	System.out.println("Testing 'Home Page' test case....");
+        host = Utils.getHost(args);
+        Thread.sleep(5000);
+        org.junit.runner.JUnitCore.main("getjar.qa.developer_zone.HomePageTest");
+    }
+    
+    @Before
+    public void setUp() {
+       driver = new FirefoxDriver();
+       //driver= new InternetExplorerDriver();
+    }
+
+    @After
+    public void tearDown() {
+        Utils.takeScreenShot(driver, this.getClass().getName());
+        driver.close();
+    }
+    
+    @AfterClass public void finalTearDown(){
+    	System.out.println("Testing for 'Home Page' finished...");
+    }
+    
+    @Test
+    public void testLinks() {
+         driver.get(HomePageTest.host);
+         assertTrue("URL " + host + " returns empty page", driver.getPageSource().length() > Config.MIN_PAGE_SRC_LENGTH);
+         new Utils().testPageLinks(driver);
+    }
+
+    @Test
+    public void testLinksLoggedIn() {
+        Utils.login(driver, host);
+        new Utils().testPageLinks(driver);
+    }
+    
+}

@@ -1,0 +1,172 @@
+package getjar.qa.developer_zone;
+
+import java.io.*;
+import java.util.*;
+import static org.junit.Assert.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+//import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.apache.commons.io.FileUtils;
+
+public class Utils {
+    // -- class for URL objects -- //
+    public class URL {
+        public String text = "";
+        public String link = "";
+
+        public URL(String text, String link) {
+            this.text = text;
+            this.link = link;
+        }
+    }
+
+    public static String getHost(String[] args) {
+        if (args.length > 0) {
+            String clHost = args[0];
+            if (!clHost.isEmpty()) {
+                if (!clHost.startsWith("https")) {
+                    clHost = clHost.replace("http", "https");
+                    if (!clHost.startsWith("https")) clHost = "https://" + clHost;
+                }
+                
+                if (clHost.endsWith("/")) clHost = clHost.substring(0, clHost.lastIndexOf("/"));
+                return clHost;
+            }
+        }
+
+        return Config.DEFAULT_HOST;
+    }
+
+    public static void login(WebDriver driver, String host) {
+        driver.get(host);
+        assertTrue("URL " + host + " returns empty page", driver.getPageSource().length() > Config.MIN_PAGE_SRC_LENGTH);
+        //driver.findElement(By.partialLinkText("Login")).sendKeys(Config.TEST_ACCOUNT_USERNAME);
+        driver.findElement(By.name("login_name")).sendKeys(Config.TEST_ACCOUNT_USERNAME);
+        driver.findElement(By.name("login_password")).sendKeys(Config.TEST_ACCOUNT_PASSWORD);
+        driver.findElement(By.linkText("Sign In")).click();
+        assertEquals("URL after login is incorrect", driver.getCurrentUrl(), host + "/publishing/allApps/");
+    }
+
+    // checks all link on page
+    //public void testPageLinks(FirefoxDriver driver) {
+    public void testPageLinks(InternetExplorerDriver driver) {
+        List<WebElement> elements = driver.findElements(By.tagName("a"));
+        List<URL> links = new ArrayList<URL>();
+        String url = "";
+
+        for (WebElement element : elements) {
+            url = element.getAttribute("href");
+            if (url == null || !url.startsWith("http") || url.indexOf("logout") > -1) continue;
+            links.add(new URL(element.getText(), url));
+        }
+
+        for (URL l : links) {
+            driver.get(l.link);
+            //Thread.sleep(5000);
+            assertTrue("Link \"" + l.text + " (url: " + l.link + ")\" returns empty page", driver.getPageSource().length() > Config.MIN_PAGE_SRC_LENGTH);
+        }
+    }
+
+    public static void testPaging(WebDriver driver) {
+        List<WebElement> elements = driver.findElements(By.tagName("a"));
+        String url = "";
+        int[] pageNumbers = new int[50];
+
+        int i = 0;
+        for (WebElement element : elements) {
+            url = element.getAttribute("href");
+            int index = -1;
+            if (url != null && url.startsWith("http") && (index = url.indexOf("page=")) > -1) {
+                pageNumbers[i] = Integer.parseInt(url.substring(index + 5));
+                i++;
+            }
+        }
+
+        int elCount = i;
+
+        if (elCount > 10) {
+            int lastPage = 1;
+
+            for (i = 0; i < elCount; i++) {
+                if (pageNumbers[i] > lastPage)
+                    lastPage = pageNumbers[i];
+            }
+
+            WebElement el = null;
+            el = driver.findElement(By.linkText("Next"));
+            el.click();
+            assertTrue("Wrong link location of \"Next\" page" + i + " (" + url + " == " + driver.getCurrentUrl() + ")", url.compareToIgnoreCase(driver.getCurrentUrl()) == 0);
+            el = driver.findElement(By.linkText("Previous"));
+            el.click();
+            assertTrue("Wrong link location of \"Previous\" page" + i + " (" + url + " == " + driver.getCurrentUrl() + ")", url.compareToIgnoreCase(driver.getCurrentUrl()) == 0);
+
+            for (i = 1; i <= lastPage; i++) {
+                try {
+                    el = driver.findElement(By.linkText(String.valueOf(i)));
+                    url = el.getAttribute("href");
+                    el.click();
+                    assertTrue("Wrong link location of page" + i + " (" + url + " == " + driver.getCurrentUrl() + ")", url.compareToIgnoreCase(driver.getCurrentUrl()) == 0);
+                } catch (NoSuchElementException exc) {
+                    continue;
+                }
+            }
+        }
+    }
+
+    public static void takeScreenShot(WebDriver driver, String fileNamePrefix) {
+        String[] parts = fileNamePrefix.split("\\.");
+        fileNamePrefix = (parts.length > 0) ? parts[parts.length-1] : fileNamePrefix;
+        try {
+            File tmpFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            String screenshotsPath = Config.PATH_SELENIUM_SCREENSHOTS;
+            String screenshotsName = fileNamePrefix + "_" + generateTSName() + ".png"; // example of name: class_2011-05-05_1215
+            FileUtils.copyFile(tmpFile, new File(screenshotsPath + screenshotsName));
+            System.out.println("Screenshot saved at http://localhost/selenium/" + screenshotsName);
+        }
+        catch (Exception e) {
+            System.out.println("Error saving screenshot: " + e.getMessage());
+        }
+    }
+    
+    public static String generateTestName() {
+        Calendar calendar = new GregorianCalendar();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+
+        return "Test " + year + " " + (month + 1) + " " + day + "  " + hour + " " + minute + " " + second;
+    }
+
+    public static String generateWrongSymbolsString() {
+        return "Wrong symbols +-*/'>;=~#$%!&<";
+    }
+    
+    public static String getRandString(String prefix) {
+        Calendar calendar = new GregorianCalendar();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        return prefix + (int) ((hour + minute + second) * Math.random());
+    }
+    
+    private static String generateTSName() {
+        Calendar calendar = new GregorianCalendar();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+
+        return year + "-" + (month + 1) + "-" + day + "_" + (hour < 10 ? "0" + hour : hour) + (minute < 10 ? "0" + minute : minute) + (second < 10 ? "0" + second : second);
+    }
+
+}

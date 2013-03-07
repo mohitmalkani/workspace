@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;ImageAdapter.java&apos; to &apos;CameraImage/src/com.malkani.cameraimage&apos;&#x0D;&#x0A;- Original project: &apos;CameraImage&apos;&#x0D;&#x0A;- Destination element: &apos;CameraImage/src/com.malkani.cameraimage&apos;&#x0D;&#x0A;- Original element: &apos;ImageAdapter.java&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move compilation unit" destination="/src&lt;com.malkani.cameraimage" element1="/src&lt;{ImageAdapter.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1351297361336" units="1" version="1.0"/>
+</session>

@@ -1,0 +1,5 @@
+package com.malkani.gmail;
+
+public class Config {
+	public final static String DEFAULT_HOST = "https://accounts.google.com/ServiceLogin?service=mail";
+}

@@ -1,0 +1,8 @@
+package com.examples.learnjava;
+
+public interface OperateCarInterface {
+	public static final String RIGHT="";
+	
+	int turn(Direction dir, double radius, double startSpeed, double stopSpeed)
+	
+}

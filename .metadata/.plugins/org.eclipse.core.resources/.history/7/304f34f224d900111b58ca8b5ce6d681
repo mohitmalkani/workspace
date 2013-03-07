@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MohitMalkani First App</string>
+    <string name="edit_message">Please write here</string>
+    <string name="button_send">Send</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Malkani</string>
+    <string name="title_activity_display_message">My Message</string>
+
+</resources>

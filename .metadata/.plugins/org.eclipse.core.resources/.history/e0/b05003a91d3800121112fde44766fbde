@@ -1,0 +1,24 @@
+package com.examples.learnjava;
+
+public class OperateCar implements OperateCarInterface{
+
+	@Override
+	public int turn(double radius, double startSpeed, double endSpeed) {
+		// TODO Auto-generated method stub
+		double startSpeed1= startSpeed;
+		return 0;
+	}
+
+	@Override
+	public int changeLanes(double startSpeed, double endSpeed) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int signalTurn(boolean signalOn) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+  
+}

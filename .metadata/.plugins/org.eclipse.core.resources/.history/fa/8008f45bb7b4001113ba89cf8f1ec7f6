@@ -1,0 +1,178 @@
+package getjar.qa.developer_zone;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+
+
+@SuppressWarnings("unused")
+public class AddNewAppTest {
+    private FirefoxDriver driver;
+    ///private InternetExplorerDriver driver;
+    private static String host = "";
+    
+    public static void main(String args[]) {
+        host = Utils.getHost(args);
+        org.junit.runner.JUnitCore.main("getjar.qa.developer_zone.AddNewAppTest");
+    }
+
+    @Before
+    public void setUp() {
+        driver = new FirefoxDriver();
+        //driver = new InternetExplorerDriver();
+        Utils.login(driver, host);
+        driver.findElement(By.linkText("New App or Site")).click();
+        
+        String appName = Utils.generateTestName();
+        String urlPart = "";
+        
+        urlPart = appName.replace(' ', '-');
+        urlPart = urlPart.toLowerCase();
+        
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {}
+        
+        // enter app name and descriptions
+        driver.findElement(By.name("soft_name")).sendKeys(appName);
+        driver.findElement(By.name("soft_url_part")).sendKeys(urlPart);
+        driver.findElement(By.name("soft_desc_list")).sendKeys("list desrc list desrc list desrc list desrc list desrc");
+        driver.findElement(By.name("soft_desc_short")).sendKeys("text descr text descr text descr text descr text descr");
+        //driver.findElement(By.name("soft_desc_long")).sendKeys("html descr html descr html descr html descr html descr");
+        
+        // category dropdown
+        WebElement categorySelectList = driver.findElement(By.id("list_soft_category"));
+        categorySelectList.findElement(By.tagName("a")).click();
+        categorySelectList.findElements(By.className("item")).get(1).click();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {}
+        // sub-category drop-down
+        WebElement subcategorySelectList = driver.findElement(By.id("list_soft_subcategory"));
+        subcategorySelectList.findElement(By.tagName("a")).click();
+        subcategorySelectList.findElements(By.className("item")).get(1).click();
+    }
+
+    @After
+    public void tearDown() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {}
+        Utils.takeScreenShot(driver, this.getClass().getName());
+        driver.close();
+    }
+
+    @Test
+    public void testSuccess() {
+    	uploadImages("");
+        driver.findElement(By.partialLinkText("Next")).click();
+        String[] urlParts = driver.getCurrentUrl().split("\\?");
+        String baseUrl = urlParts[0];
+        assertEquals("After new app submit URL is incorrect", baseUrl, host + "/publishing/newApp/");
+    }
+    
+    @Test
+    public void testEmptyAppName() {
+        uploadImages("");
+        driver.findElement(By.name("soft_name")).clear();
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no app name provided) URL is incorrect");
+    }
+    
+    @Test
+    public void testWrongAppName() {
+        uploadImages("");
+        driver.findElement(By.name("soft_name")).clear();
+        driver.findElement(By.name("soft_name")).sendKeys(Utils.generateWrongSymbolsString());
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no app name provided) URL is incorrect");
+    }
+    
+    //@Test
+    public void testEmptyListDescription() {
+        uploadImages("");
+        driver.findElement(By.name("soft_desc_list")).clear();
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no list description provided) URL is incorrect");
+    }
+    
+    //@Test
+    public void testEmptyTextDescription() {
+        uploadImages("");
+        driver.findElement(By.name("soft_desc_short")).clear();
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no text description provided) URL is incorrect");
+    }
+    
+    /*@Test
+    public void testEmptyHtmlDescription() {
+        uploadImages("");
+        driver.findElement(By.name("soft_desc_long")).clear();
+        driver.findElement(By.linkText("Next »")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no HTML description provided) URL is incorrect");
+    }
+    */
+    
+    //@Test
+    public void testNoCategorySelected() {
+        uploadImages("");
+        WebElement categorySelectList = driver.findElement(By.id("list_soft_category"));
+        categorySelectList.findElement(By.tagName("a")).click();
+        categorySelectList.findElements(By.className("item")).get(0).click();
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no category selected) URL is incorrect");
+    }
+    
+    //@Test
+    public void testNoScreenShotUploaded() {
+        uploadImages("productScreenShot");
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no screenshot uploaded) URL is incorrect");
+    }
+    
+    //@Test
+    public void testNoProductSmallIconUploaded() {
+        uploadImages("productIconSmall");
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no icon 32x32 uploaded) URL is incorrect");
+    }
+    
+    @Test
+    public void testNoProductIconUploaded() {
+        uploadImages("productIcon");
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no icon 64x64 uploaded) URL is incorrect");
+    }
+    
+    //@Test
+    public void testNoProductBigIconUploaded() {
+        uploadImages("productIconBig");
+        driver.findElement(By.partialLinkText("Next")).click();
+        checkUrlAfterWrongSubmit("After new app submit (no icon 128x128 uploaded) URL is incorrect");
+    }
+    
+    private void uploadImages(String skipImage) {
+        String testImagePath = Config.PATH_TEST_IMAGES;
+        // screenshots
+        if (skipImage.compareTo("productScreenShot") != 0) driver.findElement(By.name("productScreenShot")).sendKeys(testImagePath + "test_128.png");
+        if (skipImage.compareTo("productScreenShotSecond") != 0) driver.findElement(By.name("productScreenShotSecond")).sendKeys(testImagePath + "test_128.png");
+        if (skipImage.compareTo("productScreenShotThrid") != 0) driver.findElement(By.name("productScreenShotThrid")).sendKeys(testImagePath + "test_128.png");
+        if (skipImage.compareTo("productScreenShotFourth") != 0) driver.findElement(By.name("productScreenShotFourth")).sendKeys(testImagePath + "test_128.png");
+        if (skipImage.compareTo("productScreenShotFifth") != 0) driver.findElement(By.name("productScreenShotFifth")).sendKeys(testImagePath + "test_128.png");
+        if (skipImage.compareTo("productScreenShotSixth") != 0) driver.findElement(By.name("productScreenShotSixth")).sendKeys(testImagePath + "test_128.png");
+        // icons
+        if (skipImage.compareTo("productIconSmall") != 0) driver.findElement(By.name("productIconSmall")).sendKeys(testImagePath + "test_32.png");
+        if (skipImage.compareTo("productIcon") != 0) driver.findElement(By.name("productIcon")).sendKeys(testImagePath + "test_64.png");
+        if (skipImage.compareTo("productIconBig") != 0) driver.findElement(By.name("productIconBig")).sendKeys(testImagePath + "test_128.png");
+    }
+    
+    private void checkUrlAfterWrongSubmit(String errorMsg) {
+        String[] urlParts = driver.getCurrentUrl().split("\\?");
+        String baseUrl = urlParts[0];
+        assertEquals(errorMsg, baseUrl, host + "/publishing/newApp/");
+    }
+
+}

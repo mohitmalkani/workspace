@@ -1,0 +1,6 @@
+package com.examples.learnjava;
+
+public interface OperateCarInterface {
+	public Final String RIGHT;
+	
+}

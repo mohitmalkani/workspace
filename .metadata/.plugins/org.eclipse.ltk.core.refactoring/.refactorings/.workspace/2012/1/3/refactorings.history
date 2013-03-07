@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;/DZ_Automation&apos; to &apos;getjar&apos;&#x0D;&#x0A;- Original element: &apos;DZ_Automation&apos;" description="Rename resource &apos;DZ_Automation&apos;" flags="7" id="org.eclipse.wst.jsdt.ui.rename.resource" input="/DZ_Automation" name="getjar" stamp="1326916063529" version="1.0"/>
+</session>

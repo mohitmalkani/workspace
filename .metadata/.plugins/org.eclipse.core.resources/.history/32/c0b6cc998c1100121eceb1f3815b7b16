@@ -1,0 +1,12 @@
+package getjar.qa.developer_zone;
+
+public class Config {
+    public final static int MIN_PAGE_SRC_LENGTH = 10;
+    final static String DEFAULT_HOST = "https://developer.getjar.com/publishing/allApps";
+
+    public final static String TEST_ACCOUNT_USERNAME = "mohit@getjar.com";
+    public final static String TEST_ACCOUNT_PASSWORD = "hahaha123";
+    public final static String PATH_TEST_IMAGES = "C:\\dz_selenium\\data\\images\\";
+    public final static String PATH_TEST_FILES = "C:\\dz_selenium\\data\\files\\";
+    public final static String PATH_SELENIUM_SCREENSHOTS = "C:\\xampp\\htdocs\\selenium\\";
+}

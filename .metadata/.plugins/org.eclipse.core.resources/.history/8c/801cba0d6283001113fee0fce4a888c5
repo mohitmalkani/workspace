@@ -1,0 +1,22 @@
+package practicePackage;
+import java.util.Scanner;
+
+public class SimplePrint {
+	static String s= "Hey There";
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner scan= new Scanner(System.in);
+		String name;
+		System.out.println("Please enter your name here: ");
+		name= scan.next();
+		System.out.println("\n"+s+" "+name+" \n");
+		for(int i=name.length()-1;i>=0;i--){
+	        name = name.replaceAll("(\\r|\\n)", "");
+			System.out.println(name.charAt(i));
+		}
+	}
+
+}

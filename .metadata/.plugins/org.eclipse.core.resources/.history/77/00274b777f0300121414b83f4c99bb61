@@ -1,0 +1,4 @@
+package practicePackage;
+public class SimpleProgram {
+	public static void main("This is the simplest program in java");
+}

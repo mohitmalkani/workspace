@@ -1,0 +1,17 @@
+package practicePackage;
+
+import java.awt.Rectangle;
+
+int l, b;
+public int getArea(int l, int b){
+	retrurn l*b;
+}
+
+public class RectTest {
+	public static void main(String[] args){
+		
+		Rectangle rect1= new Rectangle(10, 15);
+		Rectangle rect2;
+		System.out.println("rect 1 Area: "+rect1.getArea();
+	}
+}

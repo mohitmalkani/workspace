@@ -1,0 +1,6 @@
+package in.malkani.junit.first;
+
+public class Bicycle {
+	private int cadence, gear, speed,id,numberOfBicycles;
+	
+}

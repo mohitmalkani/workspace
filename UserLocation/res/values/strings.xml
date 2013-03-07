@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">User Location</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="locBtn">Click for location</string>
+    <string name="location">Location</string>
+    <string name="address">St Addr</string>
+    
+</resources>

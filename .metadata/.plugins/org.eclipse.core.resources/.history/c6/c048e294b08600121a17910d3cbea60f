@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">CameraImage</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Jigsaw Puzzle</string>
+	<string name="photobutton">Start Camera</string>
+	<string name="locBtn">Location</string>String>
+	
+</resources>

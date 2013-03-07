@@ -1,0 +1,50 @@
+package getjar.qa.developer_zone;
+
+import java.util.*;
+import org.junit.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class BuildsPageTest {
+    private FirefoxDriver driver;
+    private static String host = "";
+
+    public static void main(String args[]) {
+        host = Utils.getHost(args);
+        org.junit.runner.JUnitCore.main("getjar.qa.developer_zone.BuildsPageTest");
+    }
+
+    @Before
+    public void setUp() {
+        driver = new FirefoxDriver();
+        Utils.login(driver, host);
+        driver.findElement(By.linkText("PUBLISHING")).click();
+        driver.findElement(By.linkText("Apps and Sites")).click();
+
+        List<WebElement> elements = driver.findElements(By.linkText("Edit"));
+        int elementsCount = elements.size();
+
+        if (elementsCount > 0) {
+            int linkIndex = (int) (Math.random() * (elementsCount));
+            elements.get(linkIndex).click();
+        }
+    }
+
+    @After
+    public void tearDown() {
+        Utils.takeScreenShot(driver, this.getClass().getName());
+        driver.close();
+    }
+
+    @Test
+    public void testLinks() {
+        new Utils().testPageLinks(driver);
+    }
+
+    @Test
+    public void testPaging() {
+        Utils.testPaging(driver);
+    }
+
+}

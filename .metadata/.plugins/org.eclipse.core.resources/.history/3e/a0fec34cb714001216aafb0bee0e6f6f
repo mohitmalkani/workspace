@@ -1,0 +1,51 @@
+package com.malkani.gmail;
+
+import static org.junit.Assert.*;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+////import org.openqa.selenium.WebDriver;
+//import org.junit.After;
+//import org.junit.AfterClass;
+//import org.junit.Before;
+//import org.openqa.selenium.By;
+//import org.openqa.selenium.WebDriver;
+//import org.openqa.selenium.WebElement;
+//import org.openqa.selenium.OutputType;
+import org.openqa.selenium.firefox.FirefoxDriver;
+//import org.apache.commons.io.FileUtils;
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+
+public class CreateGmailAccount {
+	
+	
+	public static FirefoxDriver driver;
+
+	@Before
+    public void setUp() {
+       driver = new FirefoxDriver();
+       //driver= new InternetExplorerDriver();
+    }
+
+    @After
+    public void tearDown() {
+        driver.close();
+    }
+    
+    @AfterClass 
+    public static void finalTearDown(){
+    	System.out.println("\nGmail Account Created Successfully....");
+    }
+	
+	public static void main(String[] args) throws InterruptedException {
+
+
+	}
+
+}

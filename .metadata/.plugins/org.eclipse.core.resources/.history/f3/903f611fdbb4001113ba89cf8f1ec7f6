@@ -1,0 +1,86 @@
+package getjar.qa.developer_zone;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class AddNewTargetTest {
+    private FirefoxDriver driver;
+    private static String host = "";
+
+    public static void main(String args[]) {
+        host = Utils.getHost(args);
+        org.junit.runner.JUnitCore.main("getjar.qa.developer_zone.AddNewTargetTest");
+    }
+
+    private String generateTestName() {
+        Calendar calendar = new GregorianCalendar();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+
+        return "Test " + year + " " + (month + 1) + " " + day + "  " + hour + " " + minute + " " + second;
+    }
+    
+    @Before
+    public void setUp() {
+        driver = new FirefoxDriver();
+        driver.get(host);
+        assertTrue("URL " + host + " returns empty page", driver.getPageSource().length() > Config.MIN_PAGE_SRC_LENGTH);
+
+        driver.findElement(By.name("login_name")).sendKeys("mohit@getjar.com");
+        driver.findElement(By.name("login_password")).sendKeys("hahaha123");
+        driver.findElement(By.linkText("Sign In")).click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
+        assertEquals("URL after login is incorrect", driver.getCurrentUrl(), host + "");
+
+        driver.findElement(By.linkText("PUBLISHING")).click();
+        driver.findElement(By.linkText("Targets")).click();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS); 
+        assertEquals("Link to the Targets' page is incorrect", driver.getCurrentUrl(), host + "publishing/targets/");
+    }
+
+    @After
+    public void tearDown() {
+        Utils.takeScreenShot(driver, this.getClass().getName());
+        driver.close();
+    }
+
+    @Test
+    public void testSuccess() {
+        driver.findElement(By.linkText("New")).click();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {}
+        // Countries
+        driver.findElement(By.id("el-617749")).click();
+        driver.findElement(By.linkText("Include")).click();
+        driver.findElement(By.partialLinkText("Continue to Networks")).click();
+        // Networks
+        driver.findElement(By.id("el-617749")).click();
+        driver.findElement(By.linkText("Include")).click();
+        driver.findElement(By.partialLinkText("Continue to Features")).click();
+        // Features
+        driver.findElement(By.id("el-11")).click();
+        driver.findElement(By.linkText("Include")).click();
+        driver.findElement(By.partialLinkText("Continue to Phones")).click();
+        // Phones
+        driver.findElement(By.id("el-281")).click();
+        driver.findElement(By.linkText("Include")).click();
+        driver.findElement(By.partialLinkText("Continue to Review")).click();
+        // Review
+        driver.findElement(By.name("target_name")).sendKeys(generateTestName());
+        driver.findElement(By.name("short_description")).sendKeys("test description test description test description");
+        driver.findElement(By.id("savefinish")).click();
+
+        assertEquals("URL after login is incorrect", driver.getCurrentUrl(), host + "publishing/target/");
+    }
+
+}

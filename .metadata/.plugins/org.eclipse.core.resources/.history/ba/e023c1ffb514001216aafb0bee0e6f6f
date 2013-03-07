@@ -1,0 +1,53 @@
+package com.malkani.gmail;
+
+import static org.junit.Assert.*;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+//import org.openqa.selenium.WebDriver;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.apache.commons.io.FileUtils;
+
+public class CreateGmailAccount {
+	
+	public final static String DEFAULT_HOST = "https://accounts.google.com/ServiceLogin?service=mail";
+	public final static String TEST_ACOUNT_FIRSTNAME="getjarqaU1";
+	public final static String TEST_ACOUNT_LASTNAME="GJQAU1";
+	public final static String TEST_ACCOUNT_USERNAME = "";
+	public final static String TEST_ACCOUNT_PASSWORD = "getjarqa";
+	public final static String TEST_CURRENT_EMAIL= "getjarqa@gmail.com";
+	public final static String TEST_PH_NUM= "4085095838";
+	
+	public sttaic FirefoxDriver driver;
+
+	@Before
+    public void setUp() {
+       driver = new FirefoxDriver();
+       //driver= new InternetExplorerDriver();
+    }
+
+    @After
+    public void tearDown() {
+        driver.close();
+    }
+    
+    @AfterClass 
+    public static void finalTearDown(){
+    	System.out.println("\nGmail Account Created Successfully....");
+    }
+	
+	public static void main(String[] args) throws InterruptedException {
+		System.out.println("Creating a Gmail Account for the test");
+        driver.get("https://accounts.google.com/ServiceLogin?service=mail");
+        driver.findElement(By.name("FirstName")).sendKeys(TEST_ACOUNT_FIRSTNAME);
+        driver.findElement(By.name("FirstName")).sendKeys(TEST_ACOUNT_LASTNAME);
+	}
+
+}

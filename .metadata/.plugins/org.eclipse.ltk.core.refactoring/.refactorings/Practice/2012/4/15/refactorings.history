@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;/Practice/src/practicePackage/SimplePrint.java&apos; to &apos;Reverse.java&apos;&#x0D;&#x0A;- Original project: &apos;Practice&apos;&#x0D;&#x0A;- Original element: &apos;SimplePrint.java&apos;" description="Rename resource &apos;SimplePrint.java&apos;" flags="7" id="org.eclipse.wst.jsdt.ui.rename.resource" input="src/practicePackage/SimplePrint.java" name="Reverse.java" stamp="1334288055248" version="1.0"/>
+</session>

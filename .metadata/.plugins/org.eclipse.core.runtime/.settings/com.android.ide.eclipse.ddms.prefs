@@ -1,0 +1,14 @@
+#Thu Nov 15 17:02:06 PST 2012
+logcat.view.colsize.TID=50
+logcat.view.colsize.Text=543
+logcat.view.colsize.Level=29
+ddms.logcat.automonitor.userprompt=true
+logcat.view.colsize.Application=143
+logcat.view.colsize.PID=50
+logcat.view.colsize.Tag=107
+ddms.logcat.auotmonitor.level=error
+com.android.ide.eclipse.ddms.useAdbHost=true
+logcat.view.colsize.Time=130
+com.android.ide.eclipse.ddms.logLevel=verbose
+eclipse.preferences.version=1
+com.android.ide.eclipse.ddms.hprofAction=hprof.open

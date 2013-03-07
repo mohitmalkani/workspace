@@ -1,0 +1,122 @@
+package getjar.qa.developer_zone;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class AddNewBuildTest {
+    private FirefoxDriver driver;
+    private static String host = "";
+    private String testFilePath = Config.PATH_TEST_FILES;
+
+    public static void main(String args[]) {
+        host = Utils.getHost(args);
+        org.junit.runner.JUnitCore.main("getjar.qa.developer_zone.AddNewBuildTest");
+    }
+
+    @Before
+    public void setUp() {
+        driver = new FirefoxDriver();
+        Utils.login(driver, host);
+        assertEquals("URL after login is incorrect", driver.getCurrentUrl(), host + "publishing/allApps");
+        driver.get(host + "/publishing/addNewBuild/?appID=286117");
+    }
+
+    @After
+    public void tearDown() {
+        String buildName = Utils.generateTestName();
+        driver.findElement(By.name("buildName")).sendKeys(buildName);
+        driver.findElement(By.name("buildVersion")).sendKeys("test version");
+        driver.findElement(By.name("buildDescription")).sendKeys("test description test description test description");
+        driver.findElement(By.id("doneBtn1")).click();
+
+        String[] urlParts = driver.getCurrentUrl().split("\\?");
+        String baseUrl = urlParts[0];
+        assertEquals("After new build submit URL is incorrect", baseUrl, host + "/publishing/addNewBuild/");
+
+        Utils.takeScreenShot(driver, this.getClass().getName());
+        driver.close();
+    }
+    
+    /*
+    @Test
+    public void testAmplicitySuccess() {
+        driver.findElement(By.partialLinkText("Amplicity")).click();
+        driver.findElement(By.name("amplicityURL")).sendKeys("http://www.getjar.com/");
+    }
+	*/
+    @Test
+    public void testAndroidSuccess() {
+        driver.findElement(By.name("buildFile-platform_androidos")).sendKeys(testFilePath + "android.apk");
+    }
+
+    /*@Test
+    public void testAndroidMarketURLSuccess() {
+        driver.findElement(By.linkText("Android Market URL")).click();
+        driver.findElement(By.name("androidMarketURL")).sendKeys("market://details?id=getjar.test.webview" + Utils.getRandString("."));
+    }*/
+    
+    @Test
+    public void testBlackberrySuccess() {
+        driver.findElement(By.linkText("BlackBerry")).click();
+        driver.findElement(By.name("buildFile-platform_bbos-COD")).sendKeys(testFilePath + "blackberry.cod");
+        driver.findElement(By.name("buildFile-platform_bbos-JAD")).sendKeys(testFilePath + "blackberry.jad");
+    }
+
+    @Test
+    public void testFlashSuccess() {
+        driver.findElement(By.linkText("Flash")).click();
+        driver.findElement(By.name("buildFile-platform_flashl")).sendKeys(testFilePath + "flash.swf");
+    }
+    // Will have to look for a solution for iOS- MM
+    @Test
+    public void testIOSSuccess() {
+        driver.findElement(By.linkText("iOS")).click();
+        driver.findElement(By.name("iphoneURL")).sendKeys("http://itunes.apple.com/us/app/angry-birds/id343200656?mt=8");
+    }
+	
+    @Test
+    public void testJavaSuccess() {
+        driver.findElement(By.linkText("Java/J2ME")).click();
+        driver.findElement(By.name("buildFile-platform_j2me-JAR")).sendKeys(testFilePath + "java.jar");
+        driver.findElement(By.name("buildFile-platform_j2me-JAD")).sendKeys(testFilePath + "java.jad");
+    }
+
+    @Test
+    public void testNokiaWRTSuccess() {
+        driver.findElement(By.linkText("Nokia WRT")).click();
+        driver.findElement(By.name("buildFile-platform_nokiawrt")).sendKeys(testFilePath + "nokia.wgz");
+    }
+
+    @Test
+    public void testPalmSuccess() {
+        driver.findElement(By.linkText("Palm")).click();
+        driver.findElement(By.name("buildFile-platform_palmos")).sendKeys(testFilePath + "palm.zip");
+    }
+
+    @Test
+    public void testSymbianSuccess() {
+        driver.findElement(By.linkText("Symbian")).click();
+        driver.findElement(By.name("buildFile-platform_symbian")).sendKeys(testFilePath + "symbian.sis");
+    }
+
+    @Test
+    public void testWebOSSuccess() {
+        driver.findElement(By.linkText("Web OS")).click();
+        driver.findElement(By.name("buildFile-platform_webos")).sendKeys(testFilePath + "webos.ipk");
+    }
+
+    @Test
+    public void testWindowsSuccess() {
+        driver.findElement(By.linkText("Windows")).click();
+        driver.findElement(By.name("buildFile-platform_winmob")).sendKeys(testFilePath + "windows.msi");
+    }
+    
+    /*@Test
+    public void testSiteShortcutSuccess() {
+        driver.findElement(By.linkText("Site Shortcut")).click();
+        driver.findElement(By.name("wapURL")).sendKeys("http://www.getjar.com/");
+    }*/
+
+}

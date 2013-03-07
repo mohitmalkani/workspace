@@ -1,0 +1,45 @@
+package com.malkani.gmail;
+
+import static org.junit.Assert.*;
+
+import org.junit.*;
+import static org.junit.Assert.*;
+//import org.openqa.selenium.WebDriver;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.apache.commons.io.FileUtils;
+
+public class CreateGmailAccount {
+	private static FirefoxDriver driver;
+
+	@Before
+    public void setUp() {
+       driver = new FirefoxDriver();
+       //driver= new InternetExplorerDriver();
+    }
+
+    @After
+    public void tearDown() {
+        driver.close();
+    }
+    
+    @AfterClass 
+    public static void finalTearDown(){
+    	System.out.println("\nGmail Account Created Successfully....");
+    }
+	
+	public static void main(String[] args) throws InterruptedException {
+		System.out.println("Creating a Gmail Account for the test");
+        driver.get(Config.DEFAULT_HOST);
+        WebElement element=driver.findElementByName(FirstName);
+		
+	}
+
+}

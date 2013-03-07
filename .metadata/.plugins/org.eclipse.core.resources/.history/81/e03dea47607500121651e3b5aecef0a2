@@ -1,0 +1,10 @@
+package com.examples.learnjava;
+
+private class Point {
+	int x=0,y=0;
+	
+	private Point(int a, int b){
+		x=a;
+		y=b;
+	}
+}
