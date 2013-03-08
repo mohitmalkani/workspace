@@ -6973,3 +6973,6 @@ org.eclipse.ecf.filetransfer.BrowseFileTransferException: HttpClient connection 
 
 !ENTRY org.eclipse.jst.jsp.core 4 4 2013-03-07 14:30:38.892
 !MESSAGE A workspace crash was detected. The previous session did not exit normally. Not using saved taglib indexes.
+
+!ENTRY org.eclipse.ui 4 4 2013-03-07 14:56:41.108
+!MESSAGE Referenced part does not exist yet: org.eclipse.ui.views.TaskList.

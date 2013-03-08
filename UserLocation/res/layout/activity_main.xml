@@ -22,4 +22,5 @@
       android:text="@string/address"
       android:id="@+id/address_text" />
 
+ 
 </LinearLayout>

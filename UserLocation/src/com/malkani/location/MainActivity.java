@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	private Location _currentLocation;
+	private Location _currentLocationCHANGE;
 	private LocationManager _locationManager;
 	private TextView _locationText;
 	private TextView _addressText;
